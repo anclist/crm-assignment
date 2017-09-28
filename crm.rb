@@ -56,8 +56,11 @@ class CRM
   end
 
   def modify_existing_contact
-    contact_to_modify = search_by_attribute
-    
+    puts "What would you like to change?"
+    option = what_option
+    contact_to_modify = search_by_attribute.first
+    puts "What's the new value?"
+    new_value = gets.chomp
     contact_to_modify.update(option, new_value)
   end
 
@@ -71,11 +74,21 @@ class CRM
 
   def search_by_attribute
     puts "What would you like to find?"
+    option = what_option
+    current_value = current_value(option)
+    p Contact.find_by(option, current_value)
+    # binding.pry
+  end
+
+  def what_option
     puts '[1] First Name'
     puts '[2] Last Name'
     puts '[3] email address'
     puts '[4] notes'
     option = gets.chomp.to_i
+  end
+
+  def current_value(option)
     if option == 1
       option_display = "First Name"
     elsif option == 2
@@ -87,11 +100,8 @@ class CRM
     end
     puts "What's your contact current #{option_display}?"
     current_value = gets.chomp
-    p Contact.find_by(option, current_value)
-    # binding.pry
+
   end
-
-
 
 end
 
