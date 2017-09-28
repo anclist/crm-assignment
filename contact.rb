@@ -129,6 +129,8 @@ end
           found_contact << contact
         end
       end
+    else
+      p "Something is wrong"
     end
     found_contact
   end
@@ -153,8 +155,8 @@ end
 end
 
 
-Contact.create("Tony", "Leon", "am@gmail.com", "something")
-Contact.create("Tony", "Leon", "am@gmail.com","something")
-Contact.create("Tony", "Leon", "am@gmail.com","something")
-Contact.create("Tony", "Leon", "am@gmail.com","something")
-Contact.create("Nathy", "Leon", "am@gmail.com","something")
+Contact.create("Tony", "Montana", "am@gmail.com", "something")
+Contact.create("Luz", "Leon", "am@gmail.com","something")
+Contact.create("Cesar", "Martinez", "am@gmail.com","something")
+Contact.create("Nathy", "Crespillo", "am@gmail.com","something")
+Contact.create("Juan", "Blanco", "am@gmail.com","something")

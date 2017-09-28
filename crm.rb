@@ -1,3 +1,4 @@
+require 'pry'
 require_relative 'contact'
 
 class CRM
@@ -55,27 +56,9 @@ class CRM
   end
 
   def modify_existing_contact
-    puts "What would you like to change?"
-    puts '[1] First Name'
-    puts '[2] Last Name'
-    puts '[3] email address'
-    puts '[4] notes'
-    option = gets.chomp
-    if option == 1
-      option_display = "First Name"
-    elsif option == 2
-      option_display = "Last Name"
-    elsif option == 3
-      option_display = "email address"
-    elsif option == 4
-      option_display = "note"
-    end
-    puts "What's your contact current #{option_display}?"
-    current_value = gets.chomp
-    puts "What's the new value?"
-    new_value = gets.chomp
-    Contact.find_by(option, current_value)
-    Contact.update(option, new_value)
+    contact_to_modify = search_by_attribute
+    
+    contact_to_modify.update(option, new_value)
   end
 
   def delete_contact
@@ -92,7 +75,7 @@ class CRM
     puts '[2] Last Name'
     puts '[3] email address'
     puts '[4] notes'
-    option = gets.chomp
+    option = gets.chomp.to_i
     if option == 1
       option_display = "First Name"
     elsif option == 2
@@ -105,6 +88,7 @@ class CRM
     puts "What's your contact current #{option_display}?"
     current_value = gets.chomp
     p Contact.find_by(option, current_value)
+    # binding.pry
   end
 
 
