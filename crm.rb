@@ -65,7 +65,7 @@ class CRM
   end
 
   def delete_contact
-
+    #DON'T FORGET TO FINISH THIS
   end
 
   def display_all_contacts
