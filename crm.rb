@@ -3,10 +3,6 @@ require_relative 'contact'
 
 class CRM
 
-  def initialize
-
-  end
-
   def main_menu
     while true # repeat indefinitely
       print_main_menu
@@ -33,9 +29,6 @@ class CRM
     when 4 then display_all_contacts
     when 5 then search_by_attribute
     when 6 then exit
-    # Finish off the rest for 3 through 6
-    # To be clear, the methods add_new_contact and modify_existing_contact
-    # haven't been implemented yet
     end
   end
 
@@ -52,32 +45,37 @@ class CRM
     print 'Enter a Note: '
     note = gets.chomp
 
-    Contact.create(first_name, last_name, email, note)
+    contact = Contact.create(first_name: first_name, last_name: last_name, email: email, note: note)
   end
 
   def modify_existing_contact
     puts "What would you like to change?"
     option = what_option
-    contact_to_modify = search_by_attribute.first
+    contact_to_modify = search_by_attribute
     puts "What's the new value?"
     new_value = gets.chomp
-    contact_to_modify.update(option, new_value)
+    contact_to_modify.update(option => new_value)
   end
 
   def delete_contact
-    #DON'T FORGET TO FINISH THIS
+    contact_to_delete = search_by_attribute
+    id = contact_to_delete.id
+    Contact.delete(id)
   end
 
   def display_all_contacts
-    print Contact.all
+    # p Contact.all
+    Contact.all.each do |contact|
+      puts "Name: #{contact.first_name}, Last Name: #{contact.last_name}, email: #{contact.email}, notes: #{contact.note}"
+    end
   end
 
   def search_by_attribute
     puts "What would you like to find?"
     option = what_option
     current_value = current_value(option)
-    p Contact.find_by(option, current_value)
-    # binding.pry
+    p Contact.find_by(option => current_value)
+    Contact.find_by(option => current_value)
   end
 
   def what_option
@@ -86,16 +84,25 @@ class CRM
     puts '[3] email address'
     puts '[4] notes'
     option = gets.chomp.to_i
+    if option == 1
+      "first_name"
+    elsif option == 2
+      "last_name"
+    elsif option == 3
+      "email"
+    elsif option == 4
+      "note"
+    end
   end
 
   def current_value(option)
-    if option == 1
+    if option == "first_name"
       option_display = "First Name"
-    elsif option == 2
+    elsif option == "last_name"
       option_display = "Last Name"
-    elsif option == 3
+    elsif option == "email"
       option_display = "email address"
-    elsif option == 4
+    elsif option == "note"
       option_display = "note"
     end
     puts "What's your contact current #{option_display}?"
@@ -108,8 +115,6 @@ end
 at_exit do
   ActiveRecord::Base.connection.close
 end
-
-#ASK ABOUT THIS
 
 a_crm_app = CRM.new
 a_crm_app.main_menu
